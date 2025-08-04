@@ -11,8 +11,16 @@ builder.Services.AddDbContext<AppDbContext>(opt =>
     opt.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection"));
 });
 
+builder.Services.AddCors(); // aqui se añade el servicio de CORS para permitir peticiones desde el cliente React
+
+
 var app = builder.Build(); // aqui se construye la aplicación con los servicios configurados
 
+
+
+
+app.UseCors(x=>x.AllowAnyHeader().AllowAnyMethod()
+  .WithOrigins("http://localhost:3000", "https://localhost:3000")); // aqui se configura CORS para permitir peticiones desde el cliente React
 
 
 app.MapControllers(); // aqui se mapean los controladores para que puedan ser accedidos
