@@ -1,30 +1,46 @@
 //Aqui se define el componente principal de la aplicación
 //para que se pueda renderizar en el DOM, Sirve como punto de entrada para la aplicación React.
 
+import { List, ListItem, ListItemText, Typography } from "@mui/material";
+import axios from "axios";
 import { useState, useEffect } from "react";
 
 function App() {
 
+ 
+  // El hook useState permite que el componente App mantenga un estado interno.
   const [activities, setActivities] = useState<Activity[]>([]);
 
-  useEffect(()=> {
-    fetch('https://localhost:5001/api/activities')
-    .then(response => response.json())
-    .then(data => setActivities(data))
-  
 
-    return ()=>{}
-  },[])
+
+  useEffect(() => {
+    axios.get<Activity[]>('https://localhost:5001/api/activities')
+      .then(Response => setActivities(Response.data))
+
+
+    return () => { }
+  }, [])
 
   return (
-    <div>
-       <h3 className="app" style={{ color: 'blue' }}>Reactivities</h3>
-       <ul>
+    <>
+      <Typography variant ='h3'>Reactivities</Typography>
+      <List>
         {activities.map(activity => (
-          <li key={activity.id}>{activity.title}</li>
+          <ListItem key={activity.id}>
+            
+          
+            <ListItemText> {activity.title} </ListItemText>             
+          </ListItem>
+
+            
         ))}
-       </ul>
-    </div>
+     
+      </List>
+
+    </>
+
+
+
 
   )
 }
