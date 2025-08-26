@@ -481,7 +481,3 @@ $RECYCLE.BIN/
 *.lnk
 
 # Vim temporary swap files
-*.swp
-API/appsettings.json
-reactivities.db-shm
-reactivities.db-wal
